@@ -2,7 +2,6 @@ from rest_framework import generics, mixins
 
 from .serializers import RegisterSerializer
 
-
 class RegisterView(generics.GenericAPIView, mixins.CreateModelMixin):
     serializer_class = RegisterSerializer
 
