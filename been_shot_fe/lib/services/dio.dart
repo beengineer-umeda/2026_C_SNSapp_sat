@@ -2,18 +2,23 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import 'auth_interceptor.dart';
+
 class DioClient {
   factory DioClient() => _instance;
   // 通信ツール（DioClient)を使いたいと呼び出す窓口
   // あらかじめ作っておいた唯一のツールをそのまま渡す（_instance）
 
   DioClient._createSingleton() {
+    authDio = _createDio();
+    authDio.interceptors.add(AuthInterceptor(authDio));
     unauthDio = _createDio();
   }
   // 「_」つける＝＞プライベート化
 
   static final DioClient _instance = DioClient._createSingleton();
 
+  late final Dio authDio;
   late final Dio unauthDio;
 
   Dio _createDio() {
